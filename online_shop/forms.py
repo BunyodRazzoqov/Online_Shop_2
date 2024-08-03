@@ -1,6 +1,6 @@
 from django import forms
 
-from online_shop.models import Comment, Order
+from online_shop.models import Comment, Order, Product
 
 
 class CommentModelForm(forms.ModelForm):
@@ -23,9 +23,8 @@ class OrderModelForm(forms.ModelForm):
         model = Order
         exclude = ('product',)
 
-    def clean_quantity(self):
-        quantity = self.data.get('quantity')
-        if not quantity.isdigit() and not (int(quantity) > 0):
-            raise forms.ValidationError('Quantity must be an integer and greater than zero.')
 
-        return quantity
+class ProductModelForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = '__all__'
