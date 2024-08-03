@@ -1,5 +1,7 @@
 from itertools import product
 from typing import Optional
+
+from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 
 from django.http import HttpResponse
@@ -63,15 +65,25 @@ def add_comment(request, product_id):
 
 def add_order(request, product_id):
     product = get_object_or_404(Product, id=product_id)
+    form = OrderModelForm()
     if request.method == 'POST':
         form = OrderModelForm(request.POST)
         if form.is_valid():
-            product.quantity -= int(form.data.get('quantity'))
             order = form.save(commit=False)
             order.product = product
-            order.save()
-            return redirect('product_detail', product_id)
-    else:
-        form = OrderModelForm()
+            if product.quantity >= order.quantity:
+                product.quantity -= order.quantity
+                product.save()
+                order.save()
+                messages.add_message(
+                    request, messages.SUCCESS,
+                    message='You order submitted successfully!'
+                )
+                return redirect('product_detail', product_id)
+            else:
+                messages.add_message(
+                    request, level=messages.ERROR,
+                    message='the number of products is limited'
+                )
     context = {'form': form, 'product': product}
     return render(request, 'online_shop/detail.html', context)
