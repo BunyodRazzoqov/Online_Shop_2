@@ -7,7 +7,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from online_shop.forms import CommentModelForm, OrderModelForm
+from online_shop.forms import CommentModelForm, OrderModelForm, ProductModelForm
 from online_shop.models import Product, Category, Comment
 
 
@@ -87,3 +87,35 @@ def add_order(request, product_id):
                 )
     context = {'form': form, 'product': product}
     return render(request, 'online_shop/detail.html', context)
+
+
+# @login_required
+def add_product(request):
+    form = ProductModelForm()
+    if request.method == 'POST':
+        form = ProductModelForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('product_list')
+
+    context = {'form': form}
+
+    return render(request, 'online_shop/add-product.html', context)
+
+
+def delete_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    if product:
+        product.delete()
+        return redirect('product_list')
+
+
+def edit_product(request, product_id):
+    product=get_object_or_404(Product, id=product_id)
+    form = ProductModelForm(instance=product)
+    if request.method == 'POST':
+        form = ProductModelForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('product_detail', product_id)
+    return render(request, 'online_shop/edit-product.html', {'form': form})

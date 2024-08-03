@@ -58,6 +58,14 @@
             <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{ product.image.url }}" alt="..."/></div>
             <div class="col-md-6">
                 <div class="small mb-1">Quantity: {{ product.quantity }} </div>
+                <div>
+                    <a href="{% url 'delete_product' product.id %}">
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </a>
+                    <a href="{% url 'edit_product' product.id %}">
+                        <button type="button" class="btn btn-primary">Edit</button>
+                    </a>
+                </div>
                 <h1 class="display-5 fw-bolder">{{ product.name }}</h1>
                 {% if product.discount %}
                     <div class="fs-5 mb-5">
@@ -79,14 +87,14 @@
                                 <ul class="messages">
                                     {% for message in messages %}
                                         {% if message.tags %}{% endif %}
-                                            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
-                                                <li style="color: red">
-                                                    {{ message }}
-                                                </li>
-                                            {% else %}
-                                                <li style="color: green">
-                                                    {{ message }}
-                                            {% endif %}
+                                        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                                            <li style="color: red">
+                                                {{ message }}
+                                            </li>
+                                        {% else %}
+                                            <li style="color: green">
+                                            {{ message }}
+                                        {% endif %}
                                     {% endfor %}
                                 </ul>
                             {% endif %}
