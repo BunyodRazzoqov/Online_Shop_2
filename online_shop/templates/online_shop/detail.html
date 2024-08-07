@@ -31,7 +31,7 @@
                     {% endif %}
                     <p class="lead">{{ product.description }}</p>
                     <div class="d-flex">
-                        <form method="post" action="{% url 'add_order' product.id %}">
+                        <form method="post" action="{% url 'add_order' product.slug %}">
                             {% csrf_token %}
                             <div class="form-group">
                                 <h2>Place an order</h2>
@@ -111,7 +111,7 @@
                         {% endif %}
                     </div>
 
-                    <form method="post" action="{% url 'add_comment' product.id %}">
+                    <form method="post" action="{% url 'add_comment' product.slug %}">
                         {% csrf_token %}
                         <div class="form-group mb-3">
                             <label for="formGroupExampleInput">Your name</label>
@@ -143,7 +143,7 @@
         <div class="container px-4 px-lg-5 mt-5">
             <h2 class="fw-bolder mb-4">Related products</h2>
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                {% for product in products %}
+                {% for product in similar_products %}
                     <div class="col mb-5">
                         <div class="card h-100">
                             <!-- Sale badge-->
@@ -180,7 +180,7 @@
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                                            href="{% url 'product_detail' product.id %}">View
+                                                            href="{% url 'product_detail' product.slug %}">View
                                     product</a>
                                 </div>
                             </div>

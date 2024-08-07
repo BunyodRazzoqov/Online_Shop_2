@@ -14,22 +14,21 @@
         </div>
     </header>
     <!-- Section-->
-
     <div class="container mt-5">
         <div class="text-left">
             <h3>Filter by</h3>
         </div>
         <div class="row">
             <div class="col-1">
-                <a class="btn btn-outline-dark mt-auto" href="#"> Expensive </a>
+                <a class="btn btn-outline-dark mt-auto" href="?filter=expensive"> Expensive </a>
             </div>
 
             <div class="col-1">
-                <a class="btn btn-outline-dark mt-auto" href="#"> Cheap </a>
+                <a class="btn btn-outline-dark mt-auto" href="?filter=cheap"> Cheap </a>
             </div>
 
             <div class="col-1">
-                <a class="btn btn-outline-dark mt-auto" href="#"> Likes </a>
+                <a class="btn btn-outline-dark mt-auto" href="?filter=rating"> Rating </a>
             </div>
 
         </div>
@@ -74,7 +73,7 @@
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                                            href="{% url 'product_detail' product.id %}">View
+                                                            href="{% url 'product_detail' product.slug %}">View
                                     product</a>
                                 </div>
                             </div>
