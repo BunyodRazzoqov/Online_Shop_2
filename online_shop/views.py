@@ -2,6 +2,7 @@ from itertools import product
 from typing import Optional
 
 from django.contrib import messages
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 
 from django.http import HttpResponse
@@ -16,35 +17,30 @@ from online_shop.models import Product, Category, Comment
 
 def product_list(request, category_id: Optional[int] = None):
     categories = Category.objects.all().order_by('id')
+    search = request.GET.get('q')
     if category_id:
         products = Product.objects.filter(category=category_id)
     else:
         products = Product.objects.all()
+
+    if search:
+        products = products.filter(Q(name__icontains=search) | Q(comments__name__icontains=search))
+
     context = {'products': products, 'categories': categories}
     return render(request, 'online_shop/home.html', context)
 
 
 def product_detail(request, product_id):
+    search = request.GET.get('q')
+    categories = Category.objects.all()
     comments = Comment.objects.filter(product=product_id, is_provide=True).order_by('-id')
     product = Product.objects.get(id=product_id)
-    context = {'product': product, 'comments': comments}
+    category_id = Product.objects.get(id=product.category_id).id
+    products = Product.objects.filter(Q(category_id=category_id) & ~Q(id=product_id)).order_by('id')
+    if search:
+        comments = comments.filter(Q(name__icontains=search) | Q(body__icontains=search))
+    context = {'product': product, 'comments': comments, 'categories': categories, 'products': products}
     return render(request, 'online_shop/detail.html', context)
-
-
-# def add_comment(request, product_id):
-#     product = get_object_or_404(Product, id=product_id)
-#     if request.method == 'POST':
-#         name = request.POST.get('name')
-#         email = request.POST.get('email')
-#         body = request.POST.get('body')
-#         comment = Comment(name=name, email=email, body=body)
-#         comment.product = product
-#         comment.save()
-#         return redirect('product_detail', product_id)
-#
-#     else:
-#         pass
-#     return render(request, 'online_shop/detail.html')
 
 
 def add_comment(request, product_id):
@@ -111,7 +107,7 @@ def delete_product(request, product_id):
 
 
 def edit_product(request, product_id):
-    product=get_object_or_404(Product, id=product_id)
+    product = get_object_or_404(Product, id=product_id)
     form = ProductModelForm(instance=product)
     if request.method == 'POST':
         form = ProductModelForm(request.POST, request.FILES, instance=product)
