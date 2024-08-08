@@ -5,6 +5,23 @@
 {% endblock %}
 
 {% block main_content %}
+    <style>
+        .menu {
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        .check {
+            padding: 40px 40px;
+            width: 20%;
+            font-size: 18px;
+
+        }
+
+        .container px-4 px-lg-5 mt-5 {
+            width: 77%;
+        }
+    </style>
     <header class="bg-dark py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
@@ -34,52 +51,104 @@
         </div>
     </div>
     <section class="py-5">
-        <div class="container px-4 px-lg-5 mt-5">
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                {% for product in products %}
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Sale badge-->
-                            {% if product.discount %}
-                                <div class="badge bg-dark text-white position-absolute"
-                                     style="top: 0.5rem; right: 0.5rem">
-                                    Sale
-                                </div>
-                            {% endif %}
-                            <!-- Product image-->
-                            <img class="card-img-top" src="{{ product.image.url }}" alt="..."/>
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">{{ product.name }}</h5>
-                                    <!-- Product reviews-->
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        {% with ''|center:product.rating as ratings %}
-                                            {% for rating in ratings %}
-                                                <div class="bi-star-fill"></div>
-                                            {% endfor %}
-                                        {% endwith %}
+        <div class="menu">
+            <div class="check">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Default checkbox
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                    <label class="form-check-label" for="flexCheckChecked">
+                        Checked checkbox
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Default checkbox
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                    <label class="form-check-label" for="flexCheckChecked">
+                        Checked checkbox
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Default checkbox
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                    <label class="form-check-label" for="flexCheckChecked">
+                        Checked checkbox
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Default checkbox
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                    <label class="form-check-label" for="flexCheckChecked">
+                        Checked checkbox
+                    </label>
+                </div>
+            </div>
+            <div class="container px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    {% for product in products %}
+                        <div class="col mb-5">
+                            <div class="card h-100">
+                                <!-- Sale badge-->
+                                {% if product.discount %}
+                                    <div class="badge bg-dark text-white position-absolute"
+                                         style="top: 0.5rem; right: 0.5rem">
+                                        Sale
                                     </div>
-                                    <!-- Product price-->
-                                    {% if product.discount %}
-                                        <span class="text-muted text-decoration-line-through">${{ product.price }}</span>
-                                        ${{ product.discounted_price }}
-                                    {% else %}
-                                        ${{ product.price }}
-                                    {% endif %}
+                                {% endif %}
+                                <!-- Product image-->
+                                <img class="card-img-top" src="{{ product.image.url }}" alt="..."/>
+                                <!-- Product details-->
+                                <div class="card-body p-4">
+                                    <div class="text-center">
+                                        <!-- Product name-->
+                                        <h5 class="fw-bolder">{{ product.name }}</h5>
+                                        <!-- Product reviews-->
+                                        <div class="d-flex justify-content-center small text-warning mb-2">
+                                            {% with ''|center:product.rating as ratings %}
+                                                {% for rating in ratings %}
+                                                    <div class="bi-star-fill"></div>
+                                                {% endfor %}
+                                            {% endwith %}
+                                        </div>
+                                        <!-- Product price-->
+                                        {% if product.discount %}
+                                            <span class="text-muted text-decoration-line-through">${{ product.price }}</span>
+                                            ${{ product.discounted_price }}
+                                        {% else %}
+                                            ${{ product.price }}
+                                        {% endif %}
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                                            href="{% url 'product_detail' product.slug %}">View
-                                    product</a>
+                                <!-- Product actions-->
+                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                                                                href="{% url 'product_detail' product.slug %}">View
+                                        product</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </section>
