@@ -1,4 +1,7 @@
 from django import forms
+from django.contrib.auth.models import User
+
+# from jazzmin.templatetags.jazzmin import User
 
 from online_shop.models import Comment, Order, Product
 
@@ -28,3 +31,14 @@ class ProductModelForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = '__all__'
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(required=True)
+    password = forms.CharField(required=True)
+
+    # def clean_username(self):
+    #     username = self.cleaned_data['username']
+    #     if not User.objects.filter(username=username).exists():
+    #         raise forms.ValidationError('Invalid username')
+    #     return username

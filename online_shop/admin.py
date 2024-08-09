@@ -12,7 +12,7 @@ from online_shop.models import Product, Category, Comment, Order
 # admin.site.register(Order)
 
 admin.site.unregister(Group)
-admin.site.unregister(User)
+# admin.site.unregister(User)
 
 
 @admin.register(Category)

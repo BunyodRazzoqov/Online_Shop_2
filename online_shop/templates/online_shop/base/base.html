@@ -46,7 +46,23 @@
                 </button>
             </form>
         </div>
+
     </div>
+    {% if user.is_authenticated %}
+        <form method="post" action="{% url 'logout_page' %}">
+            {% csrf_token %}
+            <div>
+                    <button type="submit" class="btn btn-outline-danger">Logout</button>
+                <h4>{{ user.username }}</h4>
+            </div>
+        </form>
+    {% else %}
+        <div>
+            <a href="{% url 'login_page' %}">
+                <button type="button" class="btn btn-outline-primary">Login</button>
+            </a>
+        </div>
+    {% endif %}
 </nav>
 {% block main_content %}
 {% endblock %}
