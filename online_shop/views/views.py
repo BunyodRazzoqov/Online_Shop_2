@@ -6,7 +6,6 @@ from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 
 from django.http import HttpResponse
-from django.shortcuts import render
 
 from online_shop.forms import CommentModelForm, OrderModelForm, ProductModelForm
 from online_shop.models import Product, Category, Comment

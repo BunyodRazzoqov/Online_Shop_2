@@ -85,8 +85,19 @@
                         <div class="card">
                             <div class="card-header bg-circle-shape bg-shape text-center p-2"><a
                                     class="font-sans-serif fw-bolder fs-4 z-index-1 position-relative link-light light"
-                                    href="../../../index.html">falcon</a></div>
+                                    href="{% url 'product_list' %}">Online Shop</a></div>
                             <div class="card-body p-4">
+                                <div>
+                                    {% if form.errors %}
+                                        {% for field in form %}
+                                            {% for error in field.errors %}
+                                                <div class="alert alert-danger">
+                                                    <strong>{{ error|escape }}</strong>
+                                                </div>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
                                 <div class="row flex-between-center">
                                     <div class="col-auto">
                                         <h3>Register</h3>
@@ -95,25 +106,30 @@
                                             class="mb-0 fw-semi-bold">Already User?</span> <span><a
                                             href="{% url 'login_page' %}">Login</a></span></div>
                                 </div>
-                                <form>
+                                <form method="post">
+                                    {% csrf_token %}
                                     <div class="mb-3">
-                                        <label class="form-label" for="split-name">Name</label>
-                                        <input class="form-control" type="text" autocomplete="on" id="split-name"/>
+                                        <label class="form-label" for="split-name">Username</label>
+                                        <input class="form-control" type="text" name="username" autocomplete="on"
+                                               id="split-name"/>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="split-email">Email address</label>
-                                        <input class="form-control" type="email" autocomplete="on" id="split-email"/>
+                                        <input class="form-control" type="email" name="email" autocomplete="on"
+                                               id="split-email"/>
                                     </div>
                                     <div class="row gx-2">
                                         <div class="mb-3 col-sm-6">
                                             <label class="form-label" for="split-password">Password</label>
-                                            <input class="form-control" type="password" autocomplete="on"
+                                            <input class="form-control" name="password" type="password"
+                                                   autocomplete="on"
                                                    id="split-password"/>
                                         </div>
                                         <div class="mb-3 col-sm-6">
                                             <label class="form-label" for="split-confirm-password">Confirm
                                                 Password</label>
-                                            <input class="form-control" type="password" autocomplete="on"
+                                            <input class="form-control" type="password" name="confirm_password"
+                                                   autocomplete="on"
                                                    id="split-confirm-password"/>
                                         </div>
                                     </div>
